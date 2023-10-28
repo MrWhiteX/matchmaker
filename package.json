@@ -10,9 +10,6 @@
     "vercel-build": "prisma db push && next build",
     "postinstall": "prisma generate"
   },
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.js"
-  },
   "//dependenciesComments": {
     "sharp": "nextjs strongly recommends to install sharp"
   },
