@@ -1,0 +1,88 @@
+@sessionToken = next-auth.session-token=eyJhbGciOiJIUzUxMiJ9.eyJuYW1lIjoiTXJXaGl0ZVgiLCJlbWFpbCI6ImJhcnRsb21pZWouYmFua29zekBnbWFpbC5jb20iLCJwaWN0dXJlIjoiaHR0cHM6Ly9hdmF0YXJzLmdpdGh1YnVzZXJjb250ZW50LmNvbS91LzczNzAxNjg2P3Y9NCIsInN1YiI6IjUxIiwiaWQiOjUxLCJpYXQiOjE2OTgyNjM5NDEsImV4cCI6MTcwMDg1NTk0MX0.GUmpSNxmfbfDFwjfYiqqp5gckFL9rhrXLzh0N7ezQuWmMKBpcFl9MXrRz9eK8CJvmfSLPsJO9S2buJm-P8cgzA
+
+###
+http://localhost:3000/api/hello
+Cookie: {{sessionToken}}
+
+###
+PUT http://localhost:3000/api/user/filter
+Cookie: {{sessionToken}}
+Content-Type: application/json
+
+{
+  "skill": "Tester",
+  "timezone": "GMT+2:00"
+}
+
+###
+PUT http://localhost:3000/api/user/profile
+Cookie: {{sessionToken}}
+Content-Type: application/json
+
+{
+  "skill": "Android Developer",
+  "timezone": "GMT+2:00"
+}
+
+###
+GET http://localhost:3000/api/profiles
+Cookie: {{sessionToken}}
+
+###
+POST http://localhost:3000/api/profiles
+Content-Type: application/json
+Cookie: {{sessionToken}}
+
+{
+  "targetUserId": 1
+}
+
+###
+DELETE  http://localhost:3000/api/profiles
+Content-Type: application/json
+Cookie: {{sessionToken}}
+
+{
+  "targetUserId": 34
+}
+
+
+###
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+    "email": "test@email.pl",
+    "password": "123456",
+    "fullName": "Adrian Zbyszek"
+}
+
+###
+POST http://localhost:3000/api/user/reset-password
+content-type: application/json
+
+{
+  "email": "e@e.pl"
+}
+
+###
+PUT http://localhost:3000/api/user/reset-password
+content-type: application/json
+
+{
+  "resetToken": "505fc2debd791d17a673b2a84c18b0ab7c43db1c5917",
+  "password": "12345678"
+}
+
+###
+POST http://localhost:3000/api/admin/ban
+Cookie: {{sessionToken}}
+content-type: application/json
+
+{
+  "userId": 10,
+  "status": true
+}
+
+ 
+ 
