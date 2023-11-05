@@ -95,13 +95,12 @@ export default function ProfilePage({
       fetchUser();
     }
   }, [session, loading]);
-  console.log(session);
   const handleSkip = async () => {
     const {
       data: { nextProfile },
     } = await apiRoutes.profiles.skip({ targetUserId: profile.id });
 
-    if (nextProfile.id != session?.user.id) {
+    if (nextProfile?.id != session?.user.id) {
       redirectNextStep(nextProfile);
     } else {
       window.location.replace("/profiles/browse");
@@ -116,7 +115,7 @@ export default function ProfilePage({
       content: undefined,
     });
 
-    if (nextProfile.id === session?.user?.id) {
+    if (nextProfile?.id === session?.user?.id) {
       window.location.replace("/profiles/browse");
     }
 
