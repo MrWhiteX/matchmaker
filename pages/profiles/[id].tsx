@@ -115,9 +115,9 @@ export default function ProfilePage({
       content: undefined,
     });
 
-    if (nextProfile?.id === session?.user?.id) {
-      window.location.replace("/profiles/browse");
-    }
+    // if (nextProfile?.id === session?.user?.id) {
+    //   window.location.replace("/profiles/browse");
+    // }
 
     if (hasMatch) {
       setNextId(nextProfile?.id);
