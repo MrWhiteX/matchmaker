@@ -18,7 +18,12 @@ const updateProfile = async ({ userId, payload }: IUserUpdate) => {
     },
   });
 
-  return updateUser;
+  if (updateUser) {
+    const { resetToken, passwordSalt, passwordHash, ...user } = updateUser;
+    return user;
+  } else {
+    return null;
+  }
 };
 
 export default updateProfile;

@@ -88,6 +88,7 @@ export default NextAuth({
           session.user = {};
         }
         (session.user as any).role = dbUser.role;
+        (session.user as any).id = dbUser.id;
       }
 
       return session;

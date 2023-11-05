@@ -21,6 +21,15 @@ export const getServerSideProps = async ({
       },
     };
   }
+  const sessionUser = await user.findUnique({
+    where: {
+      email: session.user?.email ?? undefined,
+    },
+    select: {
+      id: true,
+    },
+  });
+
   const currentUser = await user.findUnique({
     where: {
       email: session.user?.email ?? undefined,
@@ -39,7 +48,7 @@ export const getServerSideProps = async ({
 
   const profile = await findMatch({ userId: currentUser?.id });
 
-  if (profile) {
+  if (profile && profile.id != sessionUser?.id) {
     return {
       redirect: {
         destination: `/profiles/${profile.id}`,

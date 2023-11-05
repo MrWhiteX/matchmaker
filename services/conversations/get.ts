@@ -21,12 +21,22 @@ export const get = async ({ id, userId }: IProps) => {
     include: {
       users: {
         include: {
-          user: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+            },
+          },
         },
       },
       messages: {
         include: {
-          user: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+            },
+          },
         },
       },
     },

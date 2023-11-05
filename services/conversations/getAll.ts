@@ -39,12 +39,22 @@ export const getAll = ({
     include: {
       users: {
         include: {
-          user: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+            },
+          },
         },
       },
       messages: {
         include: {
-          user: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+            },
+          },
         },
       },
     },
@@ -54,4 +64,32 @@ export const getAll = ({
     skip: page * perPage,
     take: perPage,
   });
+
+  // return conversation.findMany({
+  //   where: {
+  //     users: {
+  //       some: {
+  //         userId,
+  //       },
+  //     },
+  //     ...filters,
+  //   },
+  //   include: {
+  //     users: {
+  //       include: {
+  //         user: true,
+  //       },
+  //     },
+  //     messages: {
+  //       include: {
+  //         user: true,
+  //       },
+  //     },
+  //   },
+  //   orderBy: {
+  //     id: "desc",
+  //   },
+  //   skip: page * perPage,
+  //   take: perPage,
+  // });
 };
