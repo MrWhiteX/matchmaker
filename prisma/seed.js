@@ -69,113 +69,113 @@ const createTimezones = async () => {
   }
 };
 
-const createUsers = async () => {
-  const randomUsersResponse = await fetch(
-    "https://randomuser.me/api/?results=50"
-  );
-  const randomUsers = await randomUsersResponse.json();
+// const createUsers = async () => {
+//   const randomUsersResponse = await fetch(
+//     "https://randomuser.me/api/?results=50"
+//   );
+//   const randomUsers = await randomUsersResponse.json();
 
-  await prisma.user.createMany({
-    data: randomUsers.results.map((user) => ({
-      email: user.email,
-      name: `${user.name.first} ${user.name.last}`,
-      emailVerified: new Date(),
-      image: user.picture.large,
-      skill: randomSkill(),
-      timezone: randomTimezone(),
-    })),
-  });
-};
+//   await prisma.user.createMany({
+//     data: randomUsers.results.map((user) => ({
+//       email: user.email,
+//       name: `${user.name.first} ${user.name.last}`,
+//       emailVerified: new Date(),
+//       image: user.picture.large,
+//       skill: randomSkill(),
+//       timezone: randomTimezone(),
+//     })),
+//   });
+// };
 
-const createFilters = async () => {
-  const alice = await prisma.user.findUnique({
-    where: { email: "alice@fullstak.pl" },
-    include: {
-      filter: true,
-    },
-  });
+// const createFilters = async () => {
+//   const alice = await prisma.user.findUnique({
+//     where: { email: "alice@fullstak.pl" },
+//     include: {
+//       filter: true,
+//     },
+//   });
 
-  if (!alice.filter) {
-    await prisma.filter.create({
-      data: {
-        user: {
-          connect: {
-            id: alice.id,
-          },
-        },
-        skill: "UI Developer",
-        timezone: "+02:00",
-      },
-    });
-  }
-};
+//   if (!alice.filter) {
+//     await prisma.filter.create({
+//       data: {
+//         user: {
+//           connect: {
+//             id: alice.id,
+//           },
+//         },
+//         skill: "UI Developer",
+//         timezone: "+02:00",
+//       },
+//     });
+//   }
+// };
 
-const createConversations = async (mainUserId) => {
-  let userIds = await prisma.user.findMany({
-    where: {
-      NOT: { id: mainUserId },
-    },
-    select: { id: true },
-  });
-  userIds = userIds.map((el) => el.id);
+// const createConversations = async (mainUserId) => {
+//   let userIds = await prisma.user.findMany({
+//     where: {
+//       NOT: { id: mainUserId },
+//     },
+//     select: { id: true },
+//   });
+//   userIds = userIds.map((el) => el.id);
 
-  const chats = [];
-  for (let i = 0; i < 35; i++) {
-    const randomId = userIds[Math.floor(Math.random() * userIds.length)];
-    chats.push(
-      prisma.conversation.create({
-        data: {
-          users: {
-            create: [
-              {
-                user: {
-                  connect: {
-                    id: randomId,
-                  },
-                },
-              },
-              {
-                user: {
-                  connect: {
-                    id: mainUserId,
-                  },
-                },
-              },
-            ],
-          },
-          messages: {
-            create: [
-              {
-                content: "Hi how are you?",
-                user: {
-                  connect: {
-                    id: randomId,
-                  },
-                },
-              },
-              {
-                content: "Im fine thanks!",
-                user: {
-                  connect: {
-                    id: mainUserId,
-                  },
-                },
-              },
-            ],
-          },
-        },
-      })
-    );
-  }
+//   const chats = [];
+//   for (let i = 0; i < 35; i++) {
+//     const randomId = userIds[Math.floor(Math.random() * userIds.length)];
+//     chats.push(
+//       prisma.conversation.create({
+//         data: {
+//           users: {
+//             create: [
+//               {
+//                 user: {
+//                   connect: {
+//                     id: randomId,
+//                   },
+//                 },
+//               },
+//               {
+//                 user: {
+//                   connect: {
+//                     id: mainUserId,
+//                   },
+//                 },
+//               },
+//             ],
+//           },
+//           messages: {
+//             create: [
+//               {
+//                 content: "Hi how are you?",
+//                 user: {
+//                   connect: {
+//                     id: randomId,
+//                   },
+//                 },
+//               },
+//               {
+//                 content: "Im fine thanks!",
+//                 user: {
+//                   connect: {
+//                     id: mainUserId,
+//                   },
+//                 },
+//               },
+//             ],
+//           },
+//         },
+//       })
+//     );
+//   }
 
-  await Promise.all(chats);
-};
+//   await Promise.all(chats);
+// };
 
 async function main() {
   await createSkills();
   await createTimezones();
-  await createUsers();
-  await createConversations(1);
+  // await createUsers();
+  // await createConversations(1);
 }
 
 main()

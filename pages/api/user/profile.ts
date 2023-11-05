@@ -16,12 +16,13 @@ const userProfileApi = async (
         where: {
           id: req?.currentUser?.id,
         },
-        include: {
+        select: {
           filter: true,
         },
       });
 
       res.status(200).json({ user });
+
       break;
     }
     case "PUT": {

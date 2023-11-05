@@ -29,6 +29,7 @@ const userFilterApi = async (
           userId,
           targetUserId: Number(targetUserId),
         });
+
         const nextProfile = await findMatch({ userId });
 
         res.status(200).json({ hasMatch, targetUser, nextProfile });

@@ -95,13 +95,17 @@ export default function ProfilePage({
       fetchUser();
     }
   }, [session, loading]);
-
+  console.log(session);
   const handleSkip = async () => {
     const {
       data: { nextProfile },
     } = await apiRoutes.profiles.skip({ targetUserId: profile.id });
 
-    redirectNextStep(nextProfile);
+    if (nextProfile.id != session?.user.id) {
+      redirectNextStep(nextProfile);
+    } else {
+      window.location.replace("/profiles/browse");
+    }
   };
 
   const handleLike = async () => {
@@ -111,6 +115,10 @@ export default function ProfilePage({
       targetUserId: profile.id,
       content: undefined,
     });
+
+    if (nextProfile.id === session?.user?.id) {
+      window.location.replace("/profiles/browse");
+    }
 
     if (hasMatch) {
       setNextId(nextProfile?.id);

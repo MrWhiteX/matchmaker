@@ -14,6 +14,7 @@ const conversationApi = async (
       try {
         const conversations = await getAll({ userId: req.currentUser?.id });
         const unread = await unreadCount({ userId: req.currentUser?.id });
+
         res.status(200).json({ conversations, unread });
       } catch (error) {
         res.status(422).json({ conversations: [], unread: 0, error });

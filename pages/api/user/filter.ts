@@ -13,6 +13,7 @@ const userFilterApi = async (
     case "PUT": {
       try {
         const payload: IFilterPayload = req.body;
+
         const filter = await upsertFilter({
           userId: req.currentUser?.id,
           payload,

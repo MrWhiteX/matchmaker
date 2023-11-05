@@ -38,6 +38,20 @@ export const findMatch = async ({ userId }: IProps) => {
         id: { in: ids },
       },
     },
+    select: {
+      id: true,
+      email: true,
+      emailVerified: true,
+      name: true,
+      role: true,
+      skill: true,
+      timezone: true,
+      createdAt: true,
+      updatedAt: true,
+      image: true,
+      biogram: true,
+      banned: true,
+    },
   });
 
   return profile;

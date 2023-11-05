@@ -51,7 +51,6 @@ const likeProfile = async ({ userId, targetUserId }: UserPair) => {
   const hasMatch = await checkIfMatchExists({ userId, targetUserId });
 
   if (hasMatch) {
-    console.log(hasMatch);
     await conversation.create({
       data: {
         users: {
@@ -72,32 +71,26 @@ const likeProfile = async ({ userId, targetUserId }: UserPair) => {
             },
           ],
         },
-        // messages: {
-        //   create: [
-        //     {
-        //       content: "Hi how are you?",
-        //       user: {
-        //         connect: {
-        //           id: 23,
-        //         },
-        //       },
-        //     },
-        //     {
-        //       content: "Im fine thanks!",
-        //       user: {
-        //         connect: {
-        //           id: 53,
-        //         },
-        //       },
-        //     },
-        //   ],
-        // },
       },
     });
   }
   const targetUser = await user.findUnique({
     where: {
       id: targetUserId,
+    },
+    select: {
+      id: true,
+      email: true,
+      emailVerified: true,
+      name: true,
+      role: true,
+      skill: true,
+      timezone: true,
+      createdAt: true,
+      updatedAt: true,
+      image: true,
+      biogram: true,
+      banned: true,
     },
   });
   return { hasMatch, targetUser };
